@@ -37,6 +37,7 @@ public class ViewEmpFrame extends javax.swing.JFrame {
         }
         }
         catch(SQLException e){
+        System.out.println("Error Ocurred");
         e.printStackTrace();
         }
         
