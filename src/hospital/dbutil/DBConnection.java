@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class DBConnection {
     //In this class we will Load Driver in static block.
-    private static Connection conn;//taaki ek he baar chle
+    private static Connection conn;//so that it runs only once
     static{
         try{
               Class.forName("oracle.jdbc.OracleDriver");
@@ -39,7 +39,8 @@ public class DBConnection {
     public static Connection getConnection(){//kyuki Connection static hai
     return conn;
     }
-    //Kb static banante hai 1.Jab class me koi data he non static na ho toh 2.Jb koi instance member nhi
+    //When we make static ?
+    //Ans:   1.When every member is static.    //2. Whene there is no instance member.
     public static void closeConnection(){
           try{
               if(conn!=null){

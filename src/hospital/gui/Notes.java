@@ -17,7 +17,7 @@ public class Notes {
     String qry ="Select empid,empname from employees where usertype='Receptionist')";
     Statement st =conn.createStatement();
     ResultSet rs =st.executeQuery();
-    //code remaining (photo 8 Jan 2020)
+    //code remaining eight jan twenty twenty
     //==========================================================================================================
     
     
@@ -37,7 +37,7 @@ public class Notes {
     
     //=======================================================================================================
     Register Receptionist Button Coding:
-    (Photo 8Jan2020)
+    
     ====
     Note:-Add one line in code in load Receptionist detail,,,just above the while loop 
     jrbEmpId.removeAllItems();
@@ -53,7 +53,7 @@ public class Notes {
     
     */
     //account on text local-Done 
-    //sql on phone 10 jan 
+    //sql on phone ten jan twenty twenty
     //doctor insert values
     
     
