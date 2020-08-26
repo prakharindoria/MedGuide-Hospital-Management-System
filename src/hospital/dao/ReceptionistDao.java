@@ -36,6 +36,7 @@ public class ReceptionistDao {
     
     }
     
+
     public static ArrayList<EmpPojo> getAllRecep() throws SQLException{
     Connection conn =DBConnection.getConnection();
     Statement st=conn.createStatement();
@@ -52,8 +53,8 @@ public class ReceptionistDao {
     return empList;
    }
     
-     public static ArrayList<String> getAllRecepName()throws SQLException
-    {
+
+     public static ArrayList<String> getAllRecepName()throws SQLException{
         ArrayList<String> RecepName = new ArrayList<>();
         ResultSet rs = DBConnection.getConnection().createStatement().executeQuery("select empname from employees where role='Receptionist'");
         while(rs.next())
@@ -63,8 +64,8 @@ public class ReceptionistDao {
         return RecepName;
     }
      
-     public static ArrayList<String> getAllRecepId()throws SQLException
-    {
+
+     public static ArrayList<String> getAllRecepId()throws SQLException {
         ArrayList<String> RecepId = new ArrayList<>();
         ResultSet rs = DBConnection.getConnection().createStatement().executeQuery("select empid from employees where role='Receptionist'");
         while(rs.next())

@@ -31,8 +31,8 @@ public class PatientDao {
         {
         String empid=rs.getString(1);
         System.out.println(empid.substring(1));
-	int eno=Integer.parseInt(empid.substring(1));
-	id = id + eno;
+	    int eno=Integer.parseInt(empid.substring(1));
+	    id = id + eno;
         String sr = "P" + id;
         System.out.println(sr);
         return sr;
@@ -91,11 +91,11 @@ public class PatientDao {
         ps.setString(1, p.getPid());
         ps.setString(2, p.getFname());
         ps.setString(3, p.getSname());
-           ps.setInt(4, p.getAge());
+        ps.setInt(4, p.getAge());
         ps.setString(5, p.getOpd());
         ps.setString(6, p.getGender());
         ps.setString(7, p.getMstatus());
-          ps.setDate(8,p.getPdate());
+        ps.setDate(8,p.getPdate());
         ps.setString(9, p.getAddress());
         ps.setString(10, p.getCity());
         ps.setString(11,p.getMno());
@@ -115,17 +115,18 @@ public class PatientDao {
         return docId;
     }
     
+
     public static boolean updatePatient(PatientPojo p)throws SQLException
     {
      PreparedStatement ps=DBConnection.getConnection().prepareStatement("update employees set empname=?,role=?,sal=? where empid=?");
      ps.setString(1, p.getPid());
         ps.setString(2, p.getFname());
         ps.setString(3, p.getSname());
-           ps.setInt(4, p.getAge());
+        ps.setInt(4, p.getAge());
         ps.setString(5, p.getOpd());
         ps.setString(6, p.getGender());
         ps.setString(7, p.getMstatus());
-          ps.setDate(8,p.getPdate());
+        ps.setDate(8,p.getPdate());
         ps.setString(9, p.getAddress());
         ps.setString(10, p.getCity());
         ps.setString(11,p.getMno());
@@ -133,12 +134,6 @@ public class PatientDao {
      return ps.executeUpdate()!=0;
      
     }
-
-
-    
-    
-    
-    
-    
+ 
     
 }

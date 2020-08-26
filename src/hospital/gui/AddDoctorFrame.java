@@ -340,15 +340,13 @@ public class AddDoctorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnAddEmpActionPerformed
 
     private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
-        // TODO add your handling code here:
         ManageDoctorsFrame optionFrame=new ManageDoctorsFrame();
         optionFrame.setVisible(true);
         this.dispose();
 
-    }//GEN-LAST:event_BtnBackEmpActionPerformed
+    }
 
     private void txtUserIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserIdActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtUserIdActionPerformed
 
     private void txtDocIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocIdActionPerformed

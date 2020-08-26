@@ -48,12 +48,14 @@ public class UserDao {
     
     }
     
+
     public static boolean changePassword(String userid,String pwd)throws SQLException{
           PreparedStatement ps=DBConnection.getConnection().prepareStatement("update users set password=?,where userid=?");
           ps.setString(1,pwd);
           ps.setString(2,userid);
           return (ps.executeUpdate()!=0);
     }
+    
     
     public static HashMap<String,String> getReceptionistList() throws SQLException{
     HashMap<String,String> receptionistList=new HashMap<>();

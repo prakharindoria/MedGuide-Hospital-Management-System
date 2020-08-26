@@ -16,14 +16,12 @@ import javax.swing.JOptionPane;
  */
 public class DBConnection {
     //In this class we will Load Driver in static block.
-    private static Connection conn;//so that it runs only once
+    private static Connection conn;//so that it runs only once hence static block is used
     static{
         try{
               Class.forName("oracle.jdbc.OracleDriver");
               conn=DriverManager.getConnection("jdbc:oracle:thin:@//Prakhar:1521/xe","system","admin");//lsnrctl command in command promt to check services of  computer
-              
               JOptionPane.showMessageDialog(null,"Connection done successfully!");
-            
            }
         catch(ClassNotFoundException cnfe){
            JOptionPane.showMessageDialog(null,"Cannot load the driver"+cnfe);
@@ -36,7 +34,7 @@ public class DBConnection {
     
     }
     
-    public static Connection getConnection(){//kyuki Connection static hai
+    public static Connection getConnection(){//Because Connection is static
     return conn;
     }
     //When we make static ?
@@ -47,7 +45,6 @@ public class DBConnection {
           conn.close();
           JOptionPane.showMessageDialog(null, "Connection Closed Successfully");
               }
-          
           }
           catch(SQLException sqlex){
            JOptionPane.showMessageDialog(null, "Problem in connection"+sqlex);

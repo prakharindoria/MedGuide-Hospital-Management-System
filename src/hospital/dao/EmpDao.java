@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 
 public class EmpDao {
+
     public static String getNewId() throws SQLException{
     Connection conn =DBConnection.getConnection();
     Statement st=conn.createStatement();
@@ -26,13 +27,13 @@ public class EmpDao {
         String a=rs.getString(1);
         System.out.println(a);
         int num=Integer.parseInt(a);
-        
         String newidis=(String)"e"+(num+100);
         return newidis;
-    
     }
     return "e101";
     }
+
+
     public static boolean addEmp(EmpPojo e)throws SQLException{
     PreparedStatement ps =DBConnection.getConnection().prepareStatement("insert into employees values(?,?,?,?)");
         ps.setString(1,e.getEmpid());
@@ -43,6 +44,7 @@ public class EmpDao {
         return x>0;
     }
     
+
     public static ArrayList<EmpPojo> getAllEmp() throws SQLException{
     Connection conn =DBConnection.getConnection();
     Statement st=conn.createStatement();
@@ -59,8 +61,8 @@ public class EmpDao {
     return empList;
    }
     
-    public static HashMap<String,EmpPojo> getEmpById()throws SQLException
-    {  
+
+    public static HashMap<String,EmpPojo> getEmpById()throws SQLException{  
      HashMap<String,EmpPojo> map=new HashMap<String,EmpPojo>();
      Statement st=DBConnection.getConnection().createStatement();
      ResultSet rs=st.executeQuery("select * from employees");
@@ -70,7 +72,7 @@ public class EmpDao {
          e.setEmpname(rs.getString(2));
          e.setJob(rs.getString(3));
          e.setSalary(rs.getDouble(4));
-         
+    
         map.put(rs.getString(1),e); 
      }
      return map;
@@ -84,6 +86,7 @@ public class EmpDao {
         return ps.executeUpdate()!=0;
     }
     
+
     public static boolean updateEmployee(EmpPojo emp)throws SQLException
     {
      PreparedStatement ps=DBConnection.getConnection().prepareStatement("update employees set empname=?,role=?,sal=? where empid=?");
@@ -92,11 +95,11 @@ public class EmpDao {
      ps.setDouble(3,emp.getSalary());
      ps.setString(4,emp.getEmpid());
      return ps.executeUpdate()!=0;
-     
     }
 
+
     public static HashMap<String, String> getNonRegisteredReceptionistList() throws SQLException {
-         HashMap<String,String> receptionistList=new HashMap<>();
+     HashMap<String,String> receptionistList=new HashMap<>();
     ResultSet rs=DBConnection.getConnection().createStatement().executeQuery("select userid,username from users where usertype='RECEPTIONIST'");
     while(rs.next())
     {

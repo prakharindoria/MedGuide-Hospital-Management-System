@@ -24,7 +24,7 @@ public class DoctorDao {
     public static ArrayList<DocPojo> getDoctorsDetail() throws SQLException{
     Connection conn =DBConnection.getConnection();
     Statement st=conn.createStatement();
-    ResultSet rs=st.executeQuery("select * from doctors");//select * from doctors
+    ResultSet rs=st.executeQuery("select * from doctors");
     ArrayList<DocPojo> docList=new ArrayList<>();
     while(rs.next()){
     DocPojo e=new DocPojo();
