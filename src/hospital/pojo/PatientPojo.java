@@ -206,6 +206,17 @@ public class PatientPojo {
     public void setDocid(String docid) {
         this.docid = docid;
     }
+    
+    
+    public int getRefs() {
+        return refs;
+    }
+
+    public void setRefs(int refs) {
+        this.refs = refs;
+    }
+    
+    
     private String pid;
     private String fname;
     private String sname;
@@ -214,14 +225,6 @@ public class PatientPojo {
     private String gender;
     private String mstatus;
     private Date pdate;
-
-    public int getRefs() {
-        return refs;
-    }
-
-    public void setRefs(int refs) {
-        this.refs = refs;
-    }
     private String address;
     private String city;
     private String mno;
