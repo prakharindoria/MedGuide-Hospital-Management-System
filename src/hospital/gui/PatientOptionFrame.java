@@ -382,9 +382,11 @@ public class PatientOptionFrame extends javax.swing.JFrame {
 
     private void dpUpdatePAtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dpUpdatePAtMouseClicked
         // TODO add your handling code here:
+        try {
         UpdatePatientFrame r=new UpdatePatientFrame();
         r.setVisible(true);
-        this.dispose();
+        this.dispose();}
+        catch(Exception e){System.out.println("Update PAtient Failed");}
     }//GEN-LAST:event_dpUpdatePAtMouseClicked
 
     /**
