@@ -46,4 +46,5 @@ public class EmpPojo {
     private String empname;
     private String job;
     private double salary;
+    //Corresponds To Table Employee
 }

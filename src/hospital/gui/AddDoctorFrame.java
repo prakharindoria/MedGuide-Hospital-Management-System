@@ -33,7 +33,7 @@ public class AddDoctorFrame extends javax.swing.JFrame {
                 Object arr[] =new Object[1];
                 arr[0]=str;
                 jbEmpName.addItem(arr[0]);
-            }
+            } 
         }
             catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"Error in DB!","Error",JOptionPane.ERROR_MESSAGE);
@@ -140,6 +140,17 @@ public class AddDoctorFrame extends javax.swing.JFrame {
         jLabel2.setText("Password");
 
         jLabel19.setText("Retype Password");
+
+        jbEmpName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jbEmpNameItemStateChanged(evt);
+            }
+        });
+        jbEmpName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEmpNameActionPerformed(evt);
+            }
+        });
 
         txtUserId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,7 +350,7 @@ public class AddDoctorFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BtnAddEmpActionPerformed
 
-    private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
+    private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {                                           
         ManageDoctorsFrame optionFrame=new ManageDoctorsFrame();
         optionFrame.setVisible(true);
         this.dispose();
@@ -360,6 +371,17 @@ public class AddDoctorFrame extends javax.swing.JFrame {
     private void txtSpecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpecActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSpecActionPerformed
+
+    private void jbEmpNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jbEmpNameItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbEmpNameItemStateChanged
+
+    private void jbEmpNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEmpNameActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_jbEmpNameActionPerformed
 
     /**
      * @param args the command line arguments

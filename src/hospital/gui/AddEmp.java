@@ -141,6 +141,7 @@ public class AddEmp extends javax.swing.JFrame {
 
         jbJob.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admin", "Receptionist", "Doctor" }));
 
+        txtEmpId.setEditable(false);
         txtEmpId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmpIdActionPerformed(evt);
@@ -260,7 +261,8 @@ public class AddEmp extends javax.swing.JFrame {
             String eno=txtEmpId.getText();
             String ename=txtEname.getText();
             int sal=Integer.parseInt(txtSal.getText());
-            String job=(String)jbJob.getSelectedItem();
+            String job=jbJob.getSelectedItem().toString().toUpperCase();
+            
             EmpPojo e=new EmpPojo();
             e.setEmpid(eno);
             e.setEmpname(ename);

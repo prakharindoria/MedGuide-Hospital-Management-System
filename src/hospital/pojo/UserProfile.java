@@ -29,5 +29,6 @@ public class UserProfile {
     }
     private static String username;
     private static String usertype;
+    //For Hello
     }
 

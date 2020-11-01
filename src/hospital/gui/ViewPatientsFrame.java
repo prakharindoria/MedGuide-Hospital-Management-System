@@ -26,7 +26,7 @@ public class ViewPatientsFrame extends javax.swing.JFrame {
         try{
         ArrayList<PatientPojo> list =PatientDao.getAllPatientDetail();
         for(PatientPojo em:list){
-        Object arr[] =new Object[13];
+        Object arr[] =new Object[12];
         arr[0]=em.getPid();
         arr[1]=em.getFname();
         arr[2]=em.getSname();
@@ -39,7 +39,7 @@ public class ViewPatientsFrame extends javax.swing.JFrame {
         arr[9]=em.getCity();
         arr[10]=em.getMno();
         arr[11]=em.getDocid();
-        arr[12]=em.getRefs();
+        //arr[12]=em.getRefs();
         
         tm.addRow(arr);
         }

@@ -55,8 +55,6 @@ public class UserDetails {
     public void setEmpId(String empId) {
         this.empId = empId;
     }
-    private String userid;
-    private String password;
 
     public String getStatus() {
         return status;
@@ -65,10 +63,12 @@ public class UserDetails {
     public void setStatus(String status) {
         this.status = status;
     }
-    private String userType;
+    
+    private String userid;
     private String userName;
     private String empId;
+    private String password;
+    private String userType;
     private String status;
-    
-    
+    //Corresponds To Table Users
 }

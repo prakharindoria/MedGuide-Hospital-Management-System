@@ -528,7 +528,7 @@ public class AddPatientFrame extends javax.swing.JFrame {
            return;
            
        }
-       addPatientDetails();
+       //addPatientDetails();
 
      
 

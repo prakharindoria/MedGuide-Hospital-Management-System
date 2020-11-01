@@ -125,8 +125,9 @@ public class SplashScreenFrame extends javax.swing.JFrame {
     while(jProgressBar1.getValue()<jProgressBar1.getMaximum()){
     try{
     jProgressBar1.setValue(count);
-    Thread.sleep(35);
-    count=count+1 ;r.nextInt(100);
+    Thread.sleep(150);
+    int i=r.nextInt(20);
+    count=count+i;
     }
     catch(InterruptedException e)
     {

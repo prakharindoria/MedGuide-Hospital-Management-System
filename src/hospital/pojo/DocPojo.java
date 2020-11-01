@@ -55,10 +55,11 @@ public class DocPojo {
     public void setStatus(String status) {
         this.status = status;
     }
-    private String docid;
     private String userid;
+    private String docid;
     private String qualification;
     private String specility;
     private String status;
+    //Corresponds to table Doctors
     
 }

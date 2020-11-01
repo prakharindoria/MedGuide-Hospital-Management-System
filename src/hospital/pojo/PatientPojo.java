@@ -31,7 +31,6 @@ public class PatientPojo {
     }
 
     public PatientPojo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -230,5 +229,5 @@ public class PatientPojo {
     private String mno;
     private String docid;
     private int refs;
-    
+    //Corresponds to table Patient
 }
