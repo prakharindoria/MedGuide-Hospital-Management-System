@@ -22,6 +22,7 @@ public class ViewDoctorFrame extends javax.swing.JFrame {
      */
     public ViewDoctorFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         DefaultTableModel tm=(DefaultTableModel)jtEmpData.getModel();
         try{
         ArrayList<DocPojo> list =DoctorDao.getDoctorsDetail();

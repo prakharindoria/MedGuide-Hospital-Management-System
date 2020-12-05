@@ -16,6 +16,7 @@ public class ManageDoctorsFrame extends javax.swing.JFrame {
      */
     public ManageDoctorsFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

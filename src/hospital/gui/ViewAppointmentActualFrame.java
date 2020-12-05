@@ -22,6 +22,7 @@ public class ViewAppointmentActualFrame extends javax.swing.JFrame {
      */
     public ViewAppointmentActualFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         DefaultTableModel tm=(DefaultTableModel)jtEmpData.getModel();
         try{
         ArrayList<AppointmentPojo> list =PatientDao.getPatientDetail();

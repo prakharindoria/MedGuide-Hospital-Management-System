@@ -72,11 +72,18 @@ public class EmpDao {
         return map;
     }
 
-    public static boolean deleteEmp(EmpPojo emp) throws SQLException {
-
-        PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM employees WHERE empid=?");
-        ps.setString(1, emp.getEmpid());
-        return ps.executeUpdate() != 0;
+    public static boolean deleteEmp(String id) throws SQLException {
+        Connection conn=DBConnection.getConnection();
+        try{
+       PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("DELETE FROM users WHERE empid=?");
+       PreparedStatement ps2 = DBConnection.getConnection().prepareStatement("DELETE FROM employees WHERE empid=?");
+        ps1.setString(1, String.valueOf(id));ps2.setString(1, String.valueOf(id));
+        return ps1.executeUpdate() != 0 && ps2.executeUpdate()!=0;
+        }catch(Exception ex){
+        ex.printStackTrace();
+        return false;
+        
+        }
     }
 
     public static boolean updateEmployee(EmpPojo emp) throws SQLException {
@@ -96,4 +103,17 @@ public class EmpDao {
         }
         return receptionistList;
     }
+    
+    public static boolean deleteEmpById(String id) throws SQLException {
+        Connection conn=DBConnection.getConnection();
+       PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM employees WHERE empid=?");
+        ps.setString(1, String.valueOf(id));
+        return ps.executeUpdate() !=0;
+        
+        
+        
+    }
+    
+    
+    
 }

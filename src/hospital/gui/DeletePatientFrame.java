@@ -5,6 +5,13 @@
  */
 package hospital.gui;
 
+import hospital.dao.PatientDao;
+import hospital.pojo.AppointmentPojo;
+import hospital.pojo.PatientPojo;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -16,6 +23,16 @@ public class DeletePatientFrame extends javax.swing.JFrame {
      */
     public DeletePatientFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        try{
+        ArrayList<AppointmentPojo> list =PatientDao.getPatientDetail();
+        for(AppointmentPojo em:list){
+        jbPatId.addItem(em.getPatid());
+        }
+        }
+        catch(SQLException e){
+        e.printStackTrace();
+        }
     }
 
     /**
@@ -33,7 +50,7 @@ public class DeletePatientFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BtnBackEmp = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
-        jbRecepId = new javax.swing.JComboBox();
+        jbPatId = new javax.swing.JComboBox();
         BtnAddEmp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -104,7 +121,7 @@ public class DeletePatientFrame extends javax.swing.JFrame {
                 .addGap(145, 145, 145)
                 .addComponent(jLabel20)
                 .addGap(18, 18, 18)
-                .addComponent(jbRecepId, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jbPatId, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(188, 188, 188)
                 .addComponent(BtnAddEmp))
@@ -117,7 +134,7 @@ public class DeletePatientFrame extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jbRecepId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbPatId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(99, 99, 99)
                 .addComponent(BtnAddEmp)
                 .addContainerGap(67, Short.MAX_VALUE))
@@ -146,6 +163,38 @@ public class DeletePatientFrame extends javax.swing.JFrame {
 
     private void BtnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddEmpActionPerformed
         // TODO add your handling code here:
+        try {
+            String pno = (String) jbPatId.getSelectedItem();
+            
+            boolean result = PatientDao.deletePatById(pno);
+            if (result) {
+                
+                JOptionPane.showMessageDialog(null, "Record Deleted Sucessfully", "Deleted!!", JOptionPane.INFORMATION_MESSAGE);
+                jbPatId.removeAllItems();
+                try{
+        ArrayList<AppointmentPojo> list =PatientDao.getPatientDetail();
+        for(AppointmentPojo em:list){
+        jbPatId.addItem(em.getPatid());
+        }
+        }
+        catch(SQLException e){
+        e.printStackTrace();
+        }
+            } else {
+
+                JOptionPane.showMessageDialog(null, "No Record Of EmpNo " + pno + " Present", "Not Found!!", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, "Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("SQLException is " + ex);
+
+        }
+        
+        
     }//GEN-LAST:event_BtnAddEmpActionPerformed
 
     private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
@@ -198,6 +247,6 @@ public class DeletePatientFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JComboBox jbRecepId;
+    private javax.swing.JComboBox jbPatId;
     // End of variables declaration//GEN-END:variables
 }

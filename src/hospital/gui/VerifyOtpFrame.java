@@ -16,6 +16,7 @@ public class VerifyOtpFrame extends javax.swing.JFrame {
      */
     public VerifyOtpFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -23,6 +23,7 @@ public class DeleteReceptionistFrame extends javax.swing.JFrame {
      */
     public DeleteReceptionistFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         try{
         ArrayList<String> list =ReceptionistDao.getAllRecepId();
         for(String em:list){
@@ -160,9 +161,7 @@ public class DeleteReceptionistFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             String eno=(String)jbRecepId.getSelectedItem();
-            EmpPojo e=new EmpPojo();
-            e.setEmpid(eno);
-            boolean result=EmpDao.deleteEmp(e);
+            boolean result=EmpDao.deleteEmp(eno);
             
             /*
             String ename=e.getEmpname();

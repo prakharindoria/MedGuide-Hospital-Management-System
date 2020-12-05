@@ -29,6 +29,7 @@ public class UpdateEmp extends javax.swing.JFrame {
     }
     public UpdateEmp() {
         initComponents();
+        this.setLocationRelativeTo(null);
         try{
         ArrayList<EmpPojo> list =EmpDao.getAllEmp();
         for(EmpPojo em:list){
@@ -236,12 +237,9 @@ public class UpdateEmp extends javax.swing.JFrame {
             return;
         }
         try{
-            
-            
-            
             double esal=Double.parseDouble(txtsal.getText());
             String ename=txtename.getText();
-            String job=(String)jbJob.getSelectedItem();
+            String job=((String)jbJob.getSelectedItem()).toUpperCase();
             String eno=(String)jbEmpId.getSelectedItem();
             EmpPojo e=new EmpPojo();
             e.setEmpid(eno);

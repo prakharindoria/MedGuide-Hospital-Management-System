@@ -21,21 +21,19 @@ public class DeleteEmp extends javax.swing.JFrame {
     /**
      * Creates new form DeleteEmp
      */
- 
-    
     public DeleteEmp() {
         initComponents();
-        
-        try{
-        ArrayList<EmpPojo> list =EmpDao.getAllEmp();
-        for(EmpPojo em:list){
-        jbEmpId.addItem(em.getEmpid());
-        
+        this.setLocationRelativeTo(null);
+
+        try {
+            ArrayList<EmpPojo> list = EmpDao.getAllEmp();
+            for (EmpPojo em : list) {
+                jbEmpId.addItem(em.getEmpid());
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        }
-        catch(SQLException e){
-        e.printStackTrace();
-        }   
     }
 
     /**
@@ -180,63 +178,46 @@ public class DeleteEmp extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        LoginFrame lf=new LoginFrame();
+        LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void BtnDeleteEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteEmpActionPerformed
         //TODO add your handling code here:
-        try{
-            String eno=(String)jbEmpId.getSelectedItem();
-            EmpPojo e=new EmpPojo();
+        try {
+            String eno = (String) jbEmpId.getSelectedItem();
+            EmpPojo e = new EmpPojo();
             e.setEmpid(eno);
-            boolean result=EmpDao.deleteEmp(e);
-            
-            /*
-            String ename=e.getEmpname();
-            double sal=e.getSalary();
-            String job=e.getJob();
-            */  
-            if(result)
-JOptionPane.showMessageDialog(null,"Record Deleted Sucessfully", "Deleted!!", JOptionPane.INFORMATION_MESSAGE);
+            boolean result = EmpDao.deleteEmpById(e.getEmpid());
+            if (result) {
+                JOptionPane.showMessageDialog(null, "Record Deleted Sucessfully", "Deleted!!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
 
-else
+                JOptionPane.showMessageDialog(null, "No Record Of EmpNo " + eno + " Present", "Not Found!!", JOptionPane.INFORMATION_MESSAGE);
 
-{
-    
-JOptionPane.showMessageDialog(null,"No Record Of EmpNo "+eno+" Present", "Not Found!!", JOptionPane.INFORMATION_MESSAGE);
+            }
 
-}
+        } catch (SQLException ex) {
 
-}
+            JOptionPane.showMessageDialog(null, "Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
 
-catch(NumberFormatException ex){
+            System.out.println("SQLException is " + ex);
 
-JOptionPane.showMessageDialog(null,"Please provide numeric input for eno!!", "Error!!", JOptionPane.ERROR_MESSAGE);
-
-}
-
-catch(SQLException ex){
-
-JOptionPane.showMessageDialog(null,"Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
-
-System.out.println("SQLException is "+ex);
-
-}
+        }
     }//GEN-LAST:event_BtnDeleteEmpActionPerformed
 
     private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
         // TODO add your handling code here:
 
-        ManageEmpFrame optionFrame=new ManageEmpFrame();
+        ManageEmpFrame optionFrame = new ManageEmpFrame();
         optionFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnBackEmpActionPerformed
 
     private void jbEmpIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEmpIdActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jbEmpIdActionPerformed
 
     /**

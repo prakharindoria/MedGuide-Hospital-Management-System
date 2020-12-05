@@ -31,6 +31,7 @@ public class AddEmp extends javax.swing.JFrame {
 
     public AddEmp() {
         initComponents();
+        this.setLocationRelativeTo(null);
         try{
         String newId =(String)EmpDao.getNewId();
         txtEmpId.setText(newId);

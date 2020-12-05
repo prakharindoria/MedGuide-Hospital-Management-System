@@ -16,6 +16,7 @@ public class ManageEmpFrame extends javax.swing.JFrame {
      */
     public ManageEmpFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

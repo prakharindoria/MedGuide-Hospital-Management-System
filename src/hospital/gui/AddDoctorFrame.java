@@ -25,6 +25,7 @@ public class AddDoctorFrame extends javax.swing.JFrame {
      */
     public AddDoctorFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         try{
             ArrayList<String> docList=DoctorDao.getAllDoctorsId();
             

@@ -16,6 +16,7 @@ public class ManageReceptionistFrame extends javax.swing.JFrame {
      */
     public ManageReceptionistFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

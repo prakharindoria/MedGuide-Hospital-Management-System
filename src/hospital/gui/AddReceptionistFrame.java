@@ -24,68 +24,63 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddReceptionistFrame
      */
-    
-    HashMap<String,String> receptionist;
+    HashMap<String, String> receptionist;
+
     private void loadReceptionistDetails() {
-        try{
-        receptionist=EmpDao.getNonRegisteredReceptionistList();
-        if(receptionist.size()==0){
-        JOptionPane.showMessageDialog(null,"No Unregisterd user");
-        return;
-        
-        
-        }
-        Set keys=receptionist.keySet();
-        Iterator <String> it=keys.iterator();
-        while(it.hasNext()){
-        jbEmpName.addItem(it.next());
-        }
-        }
-        catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(null,"Please provide numeric input for eno and sal!!", "Error!!", JOptionPane.ERROR_MESSAGE);
+        try {
+            receptionist = EmpDao.getNonRegisteredReceptionistList();
+            if (receptionist.size() == 0) {
+                JOptionPane.showMessageDialog(null, "No Unregisterd user");
+                return;
+
+            }
+            Set keys = receptionist.keySet();
+            Iterator<String> it = keys.iterator();
+            while (it.hasNext()) {
+                jbEmpName.addItem(it.next());
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please provide numeric input for eno and sal!!", "Error!!", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
-        catch(SQLException ex){
-                  JOptionPane.showMessageDialog(null,"Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        }
-        
-        
-        
-        }
-    
+
+    }
+
     public AddReceptionistFrame() {
         initComponents();
-        try{
-            ArrayList<String> RecepList=ReceptionistDao.getAllRecepId();
-            
-            for(String str:RecepList)
-            {
-                Object arr[] =new Object[1];
-                arr[0]=str;
+        this.setLocationRelativeTo(null);
+        try {
+            ArrayList<String> RecepList = ReceptionistDao.getAllRecepId();
+
+            for (String str : RecepList) {
+                Object arr[] = new Object[1];
+                arr[0] = str;
                 jbEmpName.addItem(arr[0]);
             }
-        }
-            catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error in DB!","Error",JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error in DB!", "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
-    
-    public boolean validateInput(){
-    char[] pwd=pw.getPassword();
-    char [] repw=repass.getPassword();
-    return !(txtEmpName.getText().isEmpty()||pwd.length<4||repw.length<4);
+
+    public boolean validateInput() {
+        char[] pwd = pw.getPassword();
+        char[] repw = repass.getPassword();
+        return !(txtEmpName.getText().isEmpty() || pwd.length < 4 || repw.length < 4);
     }
+
     private void clearText() {
-         //To change body of generated methods, choose Tools | Templates.
+        //To change body of generated methods, choose Tools | Templates.
         txtEmpName.setText("");
         pw.setText("");
-         repass.setText("");
+        repass.setText("");
     }
-    
-    public boolean passwordMatch(String a,String b){
-    return a.equals(b);
+
+    public boolean passwordMatch(String a, String b) {
+        return a.equals(b);
     }
 
     /**
@@ -110,6 +105,8 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
         txtEmpName = new javax.swing.JTextField();
         pw = new javax.swing.JPasswordField();
         repass = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        txtUserId = new javax.swing.JTextField();
         btnRegisterRecep = new javax.swing.JButton();
         BtnBackEmp = new javax.swing.JButton();
 
@@ -153,7 +150,7 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receptionist Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
         jPanel1.setToolTipText("");
 
-        jLabel18.setText("EmpName");
+        jLabel18.setText("UserName");
 
         jLabel20.setText("Employee Id");
 
@@ -173,55 +170,73 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
             }
         });
 
+        pw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwActionPerformed(evt);
+            }
+        });
+
+        repass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repassActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("UserId");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(55, 55, 55)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel20))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jbEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19))
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(repass, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                            .addComponent(pw))))
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addComponent(repass, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(pw, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                .addComponent(txtUserId, javax.swing.GroupLayout.Alignment.TRAILING)))))
                 .addGap(0, 109, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20)
+                    .addComponent(jbEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(repass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addGap(112, 112, 112))
+                    .addComponent(jLabel19)
+                    .addComponent(repass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65))
         );
 
         btnRegisterRecep.setBackground(new java.awt.Color(51, 204, 255));
@@ -289,7 +304,7 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        LoginFrame lf=new LoginFrame();
+        LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
@@ -300,53 +315,46 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
 
     private void btnRegisterRecepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterRecepActionPerformed
         // TODO add your handling code here:
-        if (validateInput()==false){
-        JOptionPane.showMessageDialog(null,"Please input all fields","Empty Values!",JOptionPane.ERROR_MESSAGE);
-        return;
+        if (validateInput() == false) {
+            JOptionPane.showMessageDialog(null, "Please input all fields", "Empty Values!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
-        
-        try{
-        String id=jbEmpName.getSelectedItem().toString();
-        String ename =txtEmpName.getText();
-        char[] pwd=pw.getPassword();
-        String pwsd=String.valueOf(pwd);
-        char [] repw1=repass.getPassword();
-        String repwsd=String.valueOf(repw1
-        
-        
-        );
-        if(!passwordMatch(pwsd,repwsd)){
-            JOptionPane.showMessageDialog(null,"Pass Does not Match","Empty Values!",JOptionPane.ERROR_MESSAGE);
-        return;
-        }
-            UserDetails user=new UserDetails();
-            user.setUserid(id);
+
+        try {
+            String id = jbEmpName.getSelectedItem().toString();
+            String ename = txtEmpName.getText();
+            String userid = txtUserId.getText();
+            char[] pwd = pw.getPassword();
+            String pwsd = String.valueOf(pwd);
+            char[] repw1 = repass.getPassword();
+            String repwsd = String.valueOf(repw1
+            );
+            if (!passwordMatch(pwsd, repwsd)) {
+                JOptionPane.showMessageDialog(null, "Pass Does not Match", "Empty Values!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            UserDetails user = new UserDetails();
+            user.setUserid(userid);
             user.setUserName(ename);
             user.setEmpId(id);
             user.setPassword(pwsd);
             user.setUserType("Receptionist");
             user.setStatus("Y");
-            boolean result=ReceptionistDao.addReceptionist(user);
-            
-            
-           if(result)
-            {
-                JOptionPane.showMessageDialog(null,"Record Successfully Added To The Database!!", "Success!!", JOptionPane.INFORMATION_MESSAGE);
+            boolean result = ReceptionistDao.addReceptionist(user);
+
+            if (result) {
+                JOptionPane.showMessageDialog(null, "Record Successfully Added To The Database!!", "Success!!", JOptionPane.INFORMATION_MESSAGE);
                 clearText();
                 loadReceptionistDetails();
+            } else {
+                JOptionPane.showMessageDialog(null, "Could Not Add Employee To The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
             }
-            else
-                JOptionPane.showMessageDialog(null,"Could Not Add Employee To The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
-                
-        }
-        
-        catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(null,"Please provide numeric input for eno and sal!!", "Error!!", JOptionPane.ERROR_MESSAGE);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please provide numeric input for eno and sal!!", "Error!!", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }
-        catch(SQLException ex){
-                  JOptionPane.showMessageDialog(null,"Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Problem In The Database!!", "Error!!", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
 
@@ -354,7 +362,7 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
 
     private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
         // TODO add your handling code here:
-        ManageReceptionistFrame optionFrame=new ManageReceptionistFrame();
+        ManageReceptionistFrame optionFrame = new ManageReceptionistFrame();
         optionFrame.setVisible(true);
         this.dispose();
 
@@ -363,6 +371,14 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
     private void jbEmpNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEmpNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbEmpNameActionPerformed
+
+    private void repassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_repassActionPerformed
+
+    private void pwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pwActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,6 +424,7 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -415,8 +432,7 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField pw;
     private javax.swing.JPasswordField repass;
     private javax.swing.JTextField txtEmpName;
+    private javax.swing.JTextField txtUserId;
     // End of variables declaration//GEN-END:variables
 
-    
-    
 }

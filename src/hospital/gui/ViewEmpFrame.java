@@ -23,6 +23,7 @@ public class ViewEmpFrame extends javax.swing.JFrame {
      */
     public ViewEmpFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         DefaultTableModel tm=(DefaultTableModel)jtEmpData.getModel();
         try{
         ArrayList<EmpPojo> list =EmpDao.getAllEmp();

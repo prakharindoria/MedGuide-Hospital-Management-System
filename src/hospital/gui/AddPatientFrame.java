@@ -15,6 +15,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +24,8 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class AddPatientFrame extends javax.swing.JFrame {
-    private int refs; 
+
+    private int refs;
     private String opd;
     private String f_name;
     private String s_name;
@@ -37,127 +40,105 @@ public class AddPatientFrame extends javax.swing.JFrame {
     private java.util.Date d;
     private String doctor_id;
     private ArrayList<String> doctor;
-    
+
     /**
      * Creates new form AddPatientFrame
      */
     public AddPatientFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         loadDoctorId();
         newEmpIdAndDate();
     }
-    
-    
-    
 
-    public void loadDoctorId(){
-    try{
-    doctor=DoctorDao.getAllDoctorsId();
-    for(String str:doctor)
-    {
-    jcbDocId.addItem(str);
-    }
-    }
-    catch(SQLException ex){
-    JOptionPane.showMessageDialog(null, "Error in DB","Error",JOptionPane.ERROR_MESSAGE);
-    ex.printStackTrace();
-     return;
-    }
-    }
-
-    
-    public void newEmpIdAndDate()
-    {
-      d=new java.util.Date();
-          SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
-          String str=sdf.format(d);
-        txtDate.setText(str);
-        try{
-            String str1=PatientDao.getNewId();
-            txtPId.setText(str1);
-        }
-        catch(SQLException ex){
+    public void loadDoctorId() {
+        try {
+            doctor = DoctorDao.getAllDoctorsId();
+            for (String str : doctor) {
+                jcbDocId.addItem(str);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error in DB", "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Error in database", "Error!!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
     }
 
-    
-    public boolean validateInput(){
-    f_name=txtfname.getText();
-    doctor_id=(String)jcbDocId.getSelectedItem();
-    s_name=txtsname.getText();
-    age=Integer.parseInt(txtAge.getText());
-    p_id=txtPId.getText();
-    opd=txtOpd.getText();
-    gender=(String)jcbGender.getSelectedItem();
-    m_status=(String)jcbStatus.getSelectedItem();
-    address=txtAddress.getText();
-    city=txtCity.getText();
-    mno=txtMNO.getText();
-    date=new java.sql.Date(d.getTime());
-    if(f_name.isEmpty()||s_name.isEmpty())//age opd city mno bhi is EMpty
-        return false;
-    return true;
+    public void newEmpIdAndDate() {
+        d = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String str = sdf.format(d);
+        txtDate.setText(str);
+        try {
+            String str1 = PatientDao.getNewPatId();
+            txtPId.setText(str1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error in database", "Error!!", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    
-    
-    
-    public void addPatientDetails()
-   {
-       int ans;
-       int count = 3;
-       refs = 1000 + (int) (Math.random() * 28);
-        String message = sendSms();
-	System.out.println(message);
-       if(message.contains("Invalid number"))
-       {
-           JOptionPane.showMessageDialog(null, "Please enter valid mobile number", "wrong", JOptionPane.ERROR_MESSAGE);
-           return;
-       }
-       do
-       {  
-           ans = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter one time password", "OTP", JOptionPane.INFORMATION_MESSAGE));
-           if(refs==ans)
-           {
-                PatientPojo pp=new PatientPojo(p_id,f_name,s_name,age,opd,gender,m_status,date,address,city,mno,doctor_id,refs);
-               try
-               {
-                   boolean result=PatientDao.addPatient(pp);
-                   if(result)
-                   {
-                       JOptionPane.showMessageDialog(null, "Success!", "Appointment book successfully", JOptionPane.INFORMATION_MESSAGE);
-                       PatientOptionFrame pof=new PatientOptionFrame();
-                       pof.setVisible(true);
-                       this.dispose();
-                       break;
-                   }
-                   else
-                   {
-                       JOptionPane.showMessageDialog(null, "Failed", "somethimg wrong while inserting please try again later!", JOptionPane.ERROR_MESSAGE);
-                       return;
-                   }
-               }
-               catch(SQLException ex)
-               {
-                   ex.printStackTrace();
-                   JOptionPane.showMessageDialog(null, "Exception", "Error in DB while inserting!", JOptionPane.ERROR_MESSAGE);
-               }
-           }
-           else
-           {
-               JOptionPane.showMessageDialog(null, "Please enter valid OTP", "wrong", JOptionPane.ERROR_MESSAGE);
-               count--;
-           }
-       }while(count!=0);
-   }
 
-    
-    
+    public boolean validateInput() {
+        f_name = txtfname.getText();
+        doctor_id = (String) jcbDocId.getSelectedItem();
+        s_name = txtsname.getText();
+        age = Integer.parseInt(txtAge.getText());
+        p_id = txtPId.getText();
+        opd = jcbOpd.getSelectedItem().toString();
+        gender = (String) jcbGender.getSelectedItem();
+        m_status = (String) jcbStatus.getSelectedItem();
+        address = txtAddress.getText();
+        city = txtCity.getText();
+        mno = txtMNO.getText();
+        date = new java.sql.Date(d.getTime());
+        if (f_name.isEmpty() || s_name.isEmpty())//age opd city mno bhi is EMpty
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void addPatientDetails() {
+        int ans;
+        int count = 3;
+        refs = 1000 + (int) (Math.random() * 28);
+        String message = sendSms();
+        System.out.println(message);
+        if (message.contains("Invalid number")) {
+            JOptionPane.showMessageDialog(null, "Please enter valid mobile number", "wrong", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        do {
+            ans = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter one time password", "OTP", JOptionPane.INFORMATION_MESSAGE));
+            if (refs == ans) {
+                PatientPojo pp = new PatientPojo(p_id, f_name, s_name, age, opd, gender, m_status, date, address, city, mno, doctor_id, refs);
+                try {
+                    boolean result = PatientDao.addPatient(pp);
+                    if (result) {
+                        JOptionPane.showMessageDialog(null, "Success!", "Appointment book successfully", JOptionPane.INFORMATION_MESSAGE);
+                        PatientOptionFrame pof = new PatientOptionFrame();
+                        pof.setVisible(true);
+                        this.dispose();
+                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed", "somethimg wrong while inserting please try again later!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Exception", "Error in DB while inserting!", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter valid OTP", "wrong", JOptionPane.ERROR_MESSAGE);
+                count--;
+            }
+        } while (count != 0);
+    }
+
     public String sendSms() {
         try {
             String apiKey = "apikey=" + "dVEpjuT0blE-zaTWxLFmYVQn2VbUPO6roficBl62mP";
-            String message = "&message=" + "Your OTP is "+ refs+" And Patient Id:"+p_id+" from  PRAKHAR HOSPITAL.Hope You Get Well Soon.Have a Good Day";
+            String message = "&message=" + "Your OTP is " + refs + " And Patient Id:" + p_id + " from  PRAKHAR HOSPITAL.Hope You Get Well Soon.Have a Good Day";
             String sender = "&sender=" + "TXTLCL";
             String numbers = "&numbers=" + mno;
             HttpURLConnection conn = (HttpURLConnection) new URL("https://api.textlocal.in/send/?").openConnection();
@@ -175,12 +156,10 @@ public class AddPatientFrame extends javax.swing.JFrame {
             rd.close();
             return stringBuffer.toString();
         } catch (Exception e) {
-            System.out.println("Error SMS "+e);
-            return "Error "+e;
+            System.out.println("Error SMS " + e);
+            return "Error " + e;
         }
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,7 +177,6 @@ public class AddPatientFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         BtnBackEmp = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtOpd = new javax.swing.JTextField();
         jcbDocId = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -224,6 +202,7 @@ public class AddPatientFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtMNO = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jcbOpd = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -259,7 +238,7 @@ public class AddPatientFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(20, 20, 20)
                 .addComponent(BtnBackEmp)
@@ -287,19 +266,37 @@ public class AddPatientFrame extends javax.swing.JFrame {
 
         jLabel7.setText("Patient ID");
 
+        txtPId.setEditable(false);
+
         jLabel8.setText("First Name");
 
         jLabel9.setText("AGE");
 
         jLabel10.setText("Second Name");
 
+        txtsname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsnameActionPerformed(evt);
+            }
+        });
+
         jLabel11.setText("Gender");
 
         jcbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Male", "Female", "TransGender" }));
+        jcbGender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbGenderActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Marital Status");
 
         jcbStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Married", "UnMarried" }));
+        jcbStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbStatusActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Date");
 
@@ -339,6 +336,13 @@ public class AddPatientFrame extends javax.swing.JFrame {
             }
         });
 
+        jcbOpd.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ICU", "Dental", "Emergency", "EyeCare" }));
+        jcbOpd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbOpdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -349,79 +353,68 @@ public class AddPatientFrame extends javax.swing.JFrame {
                         .addGap(62, 62, 62)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtPId, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jcbDocId, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jcbOpd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel8)
                                             .addComponent(jLabel9))
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtAge)
-                                                    .addComponent(txtfname, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel10)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(12, 12, 12)
-                                                        .addComponent(jLabel13))))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addGap(155, 155, 155)
-                                                .addComponent(jLabel11)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jcbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtsname, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtPId, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
-                                        .addGap(26, 26, 26)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jcbDocId, 0, 74, Short.MAX_VALUE)
-                                            .addComponent(txtOpd))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtAge)
+                                            .addComponent(txtfname, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 58, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel13))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtDate)
+                                        .addComponent(txtsname, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                                    .addComponent(jcbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel15)
                                     .addComponent(jLabel14))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(64, 64, 64)
+                                        .addGap(78, 78, 78)
                                         .addComponent(jLabel16)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtMNO, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 5, Short.MAX_VALUE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                                        .addGap(42, 42, 42)
+                                        .addComponent(txtMNO, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(188, 188, 188)
+                .addGap(190, 190, 190)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -436,7 +429,7 @@ public class AddPatientFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtOpd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jcbOpd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jcbDocId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -449,54 +442,50 @@ public class AddPatientFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(txtfname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)
                             .addComponent(txtsname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(jcbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel13))))
-                    .addComponent(txtDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addGap(24, 24, 24)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel13)
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(jcbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(txtMNO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(53, 53, 53)
                 .addComponent(jButton2)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGap(65, 65, 65))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        LoginFrame lf=new LoginFrame();
+        LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
         // TODO add your handling code here:
-        PatientOptionFrame optionFrame=new PatientOptionFrame();
+        PatientOptionFrame optionFrame = new PatientOptionFrame();
         optionFrame.setVisible(true);
         this.dispose();
 
@@ -516,23 +505,64 @@ public class AddPatientFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-                                               
-       if(validateInput()==false)
-       {
-           JOptionPane.showMessageDialog(null, "Error", "please fill all field first!!",JOptionPane.ERROR_MESSAGE);
-           return;
-       }
-       if(age<=0)
-       {
-           JOptionPane.showMessageDialog(null, "error", "please input valid age!!", JOptionPane.ERROR_MESSAGE);
-           return;
-           
-       }
-       //addPatientDetails();
 
-     
+        if (validateInput() == false) {
+            JOptionPane.showMessageDialog(null, "Error", "please fill all field first!!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (age <= 0) {
+            JOptionPane.showMessageDialog(null, "error", "please input valid age!!", JOptionPane.ERROR_MESSAGE);
+            return;
+
+        }
+        //addPatientDetails();
+        PatientPojo p = new PatientPojo();
+        p.setAddress(address);
+        p.setAge(age);
+        p.setCity(city);
+        p.setDocid(doctor_id);
+        p.setFname(f_name);
+        p.setSname(s_name);
+        p.setGender(gender);
+        p.setMno(mno);
+        p.setOpd(opd);
+        p.setPdate(date);
+        p.setPid(p_id);
+        p.setRefs(refs);
+        try {
+            boolean b = PatientDao.addPatient(p);
+
+            if (b == true) {
+                
+                JOptionPane.showMessageDialog(null, "Success", "Succesfully Added!!", JOptionPane.INFORMATION_MESSAGE);
+                String str1 = PatientDao.getNewPatId();
+                txtPId.setText(str1);
+            } else {
+                JOptionPane.showMessageDialog(null, "error", "please input valid entries!!", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtsnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsnameActionPerformed
+
+    private void jcbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbGenderActionPerformed
+
+    private void jcbOpdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbOpdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbOpdActionPerformed
+
+    private void jcbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -593,13 +623,13 @@ public class AddPatientFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox jcbDocId;
     private javax.swing.JComboBox jcbGender;
+    private javax.swing.JComboBox jcbOpd;
     private javax.swing.JComboBox jcbStatus;
     private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtMNO;
-    private javax.swing.JTextField txtOpd;
     private javax.swing.JTextField txtPId;
     private javax.swing.JTextField txtfname;
     private javax.swing.JTextField txtsname;

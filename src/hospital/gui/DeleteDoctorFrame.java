@@ -23,6 +23,7 @@ public class DeleteDoctorFrame extends javax.swing.JFrame {
      */
     public DeleteDoctorFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         try{
         ArrayList<String> list =DoctorDao.getAllDoctorsId();
         for(String em:list){
@@ -172,7 +173,7 @@ public class DeleteDoctorFrame extends javax.swing.JFrame {
             String eno=(String)jbDocId.getSelectedItem();
             EmpPojo e=new EmpPojo();
             e.setEmpid(eno);
-            boolean result=EmpDao.deleteEmp(e);
+            boolean result=EmpDao.deleteEmpById(e.getEmpid());
             
             /*
             String ename=e.getEmpname();

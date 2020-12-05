@@ -16,6 +16,7 @@ public class ViewPatientDetailsFrame extends javax.swing.JFrame {
      */
     public ViewPatientDetailsFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -22,19 +22,14 @@ import java.util.ArrayList;
  */
 public class PatientDao {
 
-    public static String getNewId() throws SQLException {
+    public static String getNewPatId() throws SQLException {
         Connection conn = DBConnection.getConnection();
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("Select max(p_id) from patient");
-        int id = 1;
+        ResultSet rs = st.executeQuery("select count(*) from patient");
         if (rs.next()) {
-            String empid = rs.getString(1);
-            System.out.println(empid.substring(1));
-            int eno = Integer.parseInt(empid.substring(1));
-            id = id + eno;
-            String sr = "P" + id;
-            System.out.println(sr);
-            return sr;
+            int num = Integer.parseInt(rs.getString(1));
+            String newidis = (String) "p" + (num + 101);
+            return newidis;
         } else {
             return "P101";
         }
@@ -55,6 +50,34 @@ public class PatientDao {
         return patList;
     }
 
+    
+    public static PatientPojo getPatById(String id) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("Select * from patient where p_id='"+id+"'");
+        PatientPojo e=null;
+        while (rs.next()) {
+            e = new PatientPojo();
+            e.setPid(rs.getString(1));
+            e.setFname(rs.getString(2));
+            e.setSname(rs.getString(3));
+            e.setAge(rs.getInt(4));
+            e.setOpd(rs.getString(5));
+            e.setGender(rs.getString(6));
+            e.setMstatus(rs.getString(7));
+            e.setPdate(rs.getDate(8));
+            e.setAddress(rs.getString(9));
+            e.setCity(rs.getString(10));
+            e.setMno(rs.getString(11));
+            e.setDocid(rs.getString(12));
+            //e.setRefs(rs.getInt(13));
+            
+        }
+        return e;
+    }
+    
+    
+    
     public static ArrayList<PatientPojo> getAllPatientDetail() throws SQLException {
         Connection conn = DBConnection.getConnection();
         Statement st = conn.createStatement();
@@ -123,5 +146,19 @@ public class PatientDao {
         return ps.executeUpdate() != 0;
 
     }
+    
+    
+    public static boolean deletePatById(String id) throws SQLException {
+       PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM patient WHERE p_id=?");
+        ps.setString(1, String.valueOf(id));
+        return ps.executeUpdate() !=0;
+        
+        
+        
+    }
+    
+    
+    
+   
 
 }

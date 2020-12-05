@@ -51,7 +51,7 @@ public class DoctorDao {
     }
     public static ArrayList<String> getAllDoctorsId() throws SQLException {
         ArrayList<String> docId = new ArrayList<>();
-        ResultSet rs = DBConnection.getConnection().createStatement().executeQuery("select empid from employees where role='DOCTOR'");
+        ResultSet rs = DBConnection.getConnection().createStatement().executeQuery("select doctorid from doctors");
         while (rs.next()) {
             docId.add(rs.getString(1));
         }

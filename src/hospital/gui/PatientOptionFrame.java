@@ -6,6 +6,9 @@
 package hospital.gui;
 
 import hospital.pojo.UserProfile;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +21,7 @@ public class PatientOptionFrame extends javax.swing.JFrame {
      */
     public PatientOptionFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         lblUserName.setText("HELLO "+UserProfile.getUsername());
     }
 
@@ -382,11 +386,16 @@ public class PatientOptionFrame extends javax.swing.JFrame {
 
     private void dpUpdatePAtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dpUpdatePAtMouseClicked
         // TODO add your handling code here:
+        
+        UpdatePatientFrame r = null;
         try {
-        UpdatePatientFrame r=new UpdatePatientFrame();
+            r = new UpdatePatientFrame();
+        } catch (SQLException ex) {
+            Logger.getLogger(PatientOptionFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         r.setVisible(true);
-        this.dispose();}
-        catch(Exception e){System.out.println("Update PAtient Failed");}
+        this.dispose();
+        
     }//GEN-LAST:event_dpUpdatePAtMouseClicked
 
     /**

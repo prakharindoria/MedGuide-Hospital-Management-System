@@ -19,6 +19,7 @@ public class ViewAppointmentFrame extends javax.swing.JFrame {
     public ViewAppointmentFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        
         lblUserName.setText("Hello, "+UserProfile.getUsername());
     }
 

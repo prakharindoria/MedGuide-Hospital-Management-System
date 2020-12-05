@@ -27,6 +27,7 @@ public class ViewReceptionistFrame extends javax.swing.JFrame {
      */
     public ViewReceptionistFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         DefaultTableModel tm=(DefaultTableModel)jtEmpData.getModel();
         try{
         ArrayList<EmpPojo> list =ReceptionistDao.getAllRecep();
