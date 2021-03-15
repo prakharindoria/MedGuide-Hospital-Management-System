@@ -45,6 +45,7 @@ public class EmpDao {
         Connection conn = DBConnection.getConnection();
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("Select * from employees");
+        //ResultSet rs=DBConnection.getConnection().createStatement().executeQuery("Select * from employees");
         ArrayList<EmpPojo> empList = new ArrayList<>();
         while (rs.next()) {
             EmpPojo e = new EmpPojo();
@@ -73,7 +74,6 @@ public class EmpDao {
     }
 
     public static boolean deleteEmp(String id) throws SQLException {
-        Connection conn=DBConnection.getConnection();
         try{
        PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("DELETE FROM users WHERE empid=?");
        PreparedStatement ps2 = DBConnection.getConnection().prepareStatement("DELETE FROM employees WHERE empid=?");
@@ -109,9 +109,6 @@ public class EmpDao {
        PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM employees WHERE empid=?");
         ps.setString(1, String.valueOf(id));
         return ps.executeUpdate() !=0;
-        
-        
-        
     }
     
     

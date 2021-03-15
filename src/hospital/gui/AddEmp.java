@@ -35,8 +35,6 @@ public class AddEmp extends javax.swing.JFrame {
         try{
         String newId =(String)EmpDao.getNewId();
         txtEmpId.setText(newId);
-         
-        
         }
         catch(SQLException e){
         e.printStackTrace();

@@ -19,10 +19,10 @@ public class DBConnection {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@//LAPTOP-Q82125JL:1521/xe", "med", "admin");
             JOptionPane.showMessageDialog(null, "Connection done successfully!");
         } catch (ClassNotFoundException cnfe) {
-            JOptionPane.showMessageDialog(null, "Cannot load the driver","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Cannot load the driver", "Error", JOptionPane.ERROR_MESSAGE);
             cnfe.printStackTrace();
         } catch (SQLException sqlex) {
-            JOptionPane.showMessageDialog(null,"Problem in DataBase","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Problem in DataBase", "Error", JOptionPane.ERROR_MESSAGE);
             sqlex.printStackTrace();
         }
 
@@ -36,14 +36,14 @@ public class DBConnection {
         try {
             if (conn != null) {
                 conn.close();
-                JOptionPane.showMessageDialog(null, "Connection Closed Successfully","Info",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Connection Closed Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException sqlex) {
-            JOptionPane.showMessageDialog(null, "Problem in connection","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Problem in connection", "Error", JOptionPane.ERROR_MESSAGE);
             sqlex.printStackTrace();
 
         }
 
-           //When we make static method ? When every member is static OR When there is no instance member.
+        //When we make static method ? When every member is static OR When there is no instance member.
     }
 }

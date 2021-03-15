@@ -25,24 +25,8 @@ public class ViewEmpFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         DefaultTableModel tm=(DefaultTableModel)jtEmpData.getModel();
-        try{
-        ArrayList<EmpPojo> list =EmpDao.getAllEmp();
-        for(EmpPojo em:list){
-        Object arr[] =new Object[4];
-        arr[0]=em.getEmpid();
-        arr[1]=em.getEmpname();
-        arr[2]=em.getJob();
-        arr[3]=em.getSalary();
-        tm.addRow(arr);
-        
-        }
-        }
-        catch(SQLException e){
-        System.out.println("Error Ocurred");
-        e.printStackTrace();
-        }
-        
-        
+        showEmpData();
+       
     }
     private void showEmpData(){
         try{

@@ -39,7 +39,7 @@ public class PatientPojo {
         hash = 61 * hash + Objects.hashCode(this.pid);
         hash = 61 * hash + Objects.hashCode(this.fname);
         hash = 61 * hash + Objects.hashCode(this.sname);
-        hash = 61 * hash + this.age;
+        hash = 61 * hash + Objects.hashCode(this.age);
         hash = 61 * hash + Objects.hashCode(this.opd);
         hash = 61 * hash + Objects.hashCode(this.gender);
         hash = 61 * hash + Objects.hashCode(this.mstatus);
@@ -48,7 +48,7 @@ public class PatientPojo {
         hash = 61 * hash + Objects.hashCode(this.city);
         hash = 61 * hash + Objects.hashCode(this.mno);
         hash = 61 * hash + Objects.hashCode(this.docid);
-        hash = 61 * hash + this.refs;
+        hash = 61 * hash + Objects.hashCode(this.refs);
         return hash;
     }
 

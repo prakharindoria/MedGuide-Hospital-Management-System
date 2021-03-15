@@ -22,8 +22,9 @@ import static oracle.net.aso.C05.d;
  *
  * @author Admin
  */
-public class UpdatePatientFrame extends javax.swing.JFrame {
-
+  
+public class UpdatePatientFrame extends javax.swing.JFrame 
+{
     private HashMap<String, PatientPojo> map;
     private String fname;
     private String sname;
@@ -55,9 +56,10 @@ public class UpdatePatientFrame extends javax.swing.JFrame {
         ArrayList<DocPojo> listdoc;
 
         //Date Set into Txt box
-        java.util.Date d = new java.util.Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-        String sdate = sdf.format(d);
+//        java.util.Date d = new java.util.Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+//        String sdate = sdf.format(d);
+        String sdate=new SimpleDateFormat("dd/mm/yyyy").format(new java.util.Date());
         txtDate.setText(sdate);
 
         try {

@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
--
-* To change this template file, choose Tools | Templates
+ -
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package hospital.gui;
@@ -21,25 +21,26 @@ public class UpdateEmp extends javax.swing.JFrame {
     /**
      * Creates new form UpdateEmp
      */
-    private boolean validateInput(){
-        if(txtename.getText().isEmpty() || txtsal.getText().isEmpty())
+    private boolean validateInput() {
+        if (txtename.getText().isEmpty() || txtsal.getText().isEmpty()) {
             return false;
-        else
+        } else {
             return true;
+        }
     }
+
     public UpdateEmp() {
         initComponents();
         this.setLocationRelativeTo(null);
-        try{
-        ArrayList<EmpPojo> list =EmpDao.getAllEmp();
-        for(EmpPojo em:list){
-        jbEmpId.addItem(em.getEmpid());
+        try {
+            ArrayList<EmpPojo> list = EmpDao.getAllEmp();
+            for (EmpPojo em : list) {
+                jbEmpId.addItem(em.getEmpid());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        }
-        catch(SQLException e){
-        e.printStackTrace();
-        }
-        
+
     }
 
     /**
@@ -216,7 +217,7 @@ public class UpdateEmp extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        LoginFrame lf=new LoginFrame();
+        LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
@@ -231,33 +232,32 @@ public class UpdateEmp extends javax.swing.JFrame {
 
     private void BtnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddEmpActionPerformed
         // TODO add your handling code here:
-        
-        if(validateInput()==false){
-            JOptionPane.showMessageDialog(null,"Please input all values!");
+
+        if (validateInput() == false) {
+            JOptionPane.showMessageDialog(null, "Please input all values!");
             return;
         }
-        try{
-            double esal=Double.parseDouble(txtsal.getText());
-            String ename=txtename.getText();
-            String job=((String)jbJob.getSelectedItem()).toUpperCase();
-            String eno=(String)jbEmpId.getSelectedItem();
-            EmpPojo e=new EmpPojo();
+        try {
+            double esal = Double.parseDouble(txtsal.getText());
+            String ename = txtename.getText();
+            String job = ((String) jbJob.getSelectedItem()).toUpperCase();
+            String eno = (String) jbEmpId.getSelectedItem();
+            EmpPojo e = new EmpPojo();
             e.setEmpid(eno);
             e.setEmpname(ename);
             e.setSalary(esal);
             e.setJob(job);
-            boolean result=EmpDao.updateEmployee(e);
-            if(result)
-            JOptionPane.showMessageDialog(null,"Record Saved!");
-            else
-            JOptionPane.showMessageDialog(null,"Record not Saved!");
-        }
-        catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(null,"Please input digits only","Error!",JOptionPane.ERROR_MESSAGE);
+            boolean result = EmpDao.updateEmployee(e);
+            if (result) {
+                JOptionPane.showMessageDialog(null, "Record Saved!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Record not Saved!");
+            }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Please input digits only", "Error!", JOptionPane.ERROR_MESSAGE);
             nfe.printStackTrace();
-        }
-        catch(SQLException sqle){
-            JOptionPane.showMessageDialog(null,"SQL Eror"+sqle,"Error!",JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException sqle) {
+            JOptionPane.showMessageDialog(null, "SQL Eror" + sqle, "Error!", JOptionPane.ERROR_MESSAGE);
             sqle.printStackTrace();
         }
 
@@ -266,7 +266,7 @@ public class UpdateEmp extends javax.swing.JFrame {
     private void BtnBackEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackEmpActionPerformed
         // TODO add your handling code here:
 
-        ManageEmpFrame optionFrame=new ManageEmpFrame();
+        ManageEmpFrame optionFrame = new ManageEmpFrame();
         optionFrame.setVisible(true);
         this.dispose();
 
