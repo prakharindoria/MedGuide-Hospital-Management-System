@@ -22,14 +22,14 @@ import java.util.ArrayList;
 public class ReceptionistDao {
     public static boolean addReceptionist(UserDetails user) throws SQLException{
         Connection conn=DBConnection.getConnection();
-        String qry="insert into users values(?,?,?,?,?,?)";
+        String qry="insert into users values(?,?,?,?,?)";
         PreparedStatement ps=conn.prepareStatement(qry);
         ps.setString(1,user.getUserid());
         ps.setString(2,user.getUserName());
         ps.setString(3,user.getEmpId());
         ps.setString(4,user.getPassword());
         ps.setString(5,user.getUserType());
-        ps.setString(6,user.getStatus());
+//     ps.setString(6,user.getStatus());
         
         int x=ps.executeUpdate();
         return x>0;

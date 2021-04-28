@@ -327,8 +327,7 @@ public class AddReceptionistFrame extends javax.swing.JFrame {
             char[] pwd = pw.getPassword();
             String pwsd = String.valueOf(pwd);
             char[] repw1 = repass.getPassword();
-            String repwsd = String.valueOf(repw1
-            );
+            String repwsd = String.valueOf(repw1);
             if (!passwordMatch(pwsd, repwsd)) {
                 JOptionPane.showMessageDialog(null, "Pass Does not Match", "Empty Values!", JOptionPane.ERROR_MESSAGE);
                 return;

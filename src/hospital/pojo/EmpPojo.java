@@ -15,6 +15,15 @@ public class EmpPojo {
         return empid;
     }
 
+    public EmpPojo(String empid, String empname, String job, double salary) {
+        this.empid = empid;
+        this.empname = empname;
+        this.job = job;
+        this.salary = salary;
+    }
+    
+    public EmpPojo(){}
+
     public void setEmpid(String empid) {
         this.empid = empid;
     }

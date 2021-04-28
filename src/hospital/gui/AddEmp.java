@@ -259,14 +259,10 @@ public class AddEmp extends javax.swing.JFrame {
         {
             String eno=txtEmpId.getText();
             String ename=txtEname.getText();
-            int sal=Integer.parseInt(txtSal.getText());
+            double sal=Double.parseDouble(txtSal.getText());
             String job=jbJob.getSelectedItem().toString().toUpperCase();
             
-            EmpPojo e=new EmpPojo();
-            e.setEmpid(eno);
-            e.setEmpname(ename);
-            e.setJob(job);
-            e.setSalary(sal);
+            EmpPojo e=new EmpPojo(eno,ename,job,sal);
             boolean result=EmpDao.addEmp(e);
             if(result)
             {
