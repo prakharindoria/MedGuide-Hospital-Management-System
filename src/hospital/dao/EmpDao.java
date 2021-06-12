@@ -105,7 +105,6 @@ public class EmpDao {
     }
     
     public static boolean deleteEmpById(String id) throws SQLException {
-        Connection conn=DBConnection.getConnection();
        PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM employees WHERE empid=?");
         ps.setString(1, String.valueOf(id));
         return ps.executeUpdate() !=0;
