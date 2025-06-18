@@ -42,7 +42,7 @@ This project was developed using Apache NetBeans.
     *   Apache NetBeans IDE (optional, but helpful for project management).
 2.  **Database Setup**:
     *   The application expects a specific database schema. Ensure the necessary tables (patient, doctors, employees, users, etc.) are created.
-    *   The database connection details (URL, username, password) are managed in `src/hospital/dbutil/DBConnection.java`. This class now uses HikariCP for connection pooling. The original hardcoded connection targeted `jdbc:oracle:thin:@//LAPTOP-Q82125JL:1521/xe` with user `med` and password `admin` – adapt this configuration as needed for your environment.
+    *   The database connection details (URL, username, password) are managed in `src/hospital/dbutil/DBConnection.java`. This class now uses HikariCP for connection pooling. The original hardcoded connection targeted `jdbc:oracle:thin:@//<YOUR_DATABASE_HOST>:1521/xe` with user `med` and password `admin` – adapt this configuration as needed for your environment.
 3.  **Running the Application**:
     *   Open the project in NetBeans.
     *   The main entry point for the application is likely `src/hospital/gui/SplashScreenFrame.java` or a similar GUI starting point.
